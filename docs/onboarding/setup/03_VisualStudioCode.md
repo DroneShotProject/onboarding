@@ -16,7 +16,7 @@ Homebrew を使ってインストールします。
 
 以下の項目は、すべてチェックを入れてください。
 
-![Windows 版 Visual Studio Code インストール時の設定画面](./assets/03_windows_install-visual-studio-code.png)
+![Windows 版 Visual Studio Code インストール時の設定画面](../assets/03_windows_install-visual-studio-code.png)
 
 ## 拡張機能を追加
 
