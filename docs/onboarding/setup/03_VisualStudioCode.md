@@ -25,7 +25,6 @@ macOS であれば、⇧⌘X で開くこともできます。
 
 ### 必須
 
-- Flutter
 - GitHub Pull Requests
 - GitHub Copilot
 
