@@ -21,6 +21,8 @@
 
 GitHub Copilot などの GitHub Pro ユーザ向けのサービスを無料で利用することができるほか、さまざまなサービスのクレジットを無料でもらえるなどの特典を得ることができます。
 
+- 登録サポート: [Craft Stadium「GitHub Education申請者向けガイド」](https://www.craftstadium.com/blog/github-education-applicant)
+
 ## DroneShotProject への招待を承諾
 
 既存メンバーに、自分の `Username` を伝えて、DroneShotProject に招待してもらうようにお願いしてください。  
