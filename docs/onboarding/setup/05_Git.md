@@ -3,6 +3,7 @@
 ## [Windows] Git をインストール
 
 [Git for Windows](https://gitforwindows.org)をダウンロードしてインストールします。
+スクリーンショットがないものはデフォルト選択のまま進みます。
 
 <details>
 <summary>インストール手順詳細</summary>
@@ -24,6 +25,9 @@
 [macOS] ターミナル.app を起動します。
 
 [Windows] Windows ターミナルを起動します。
+
+**<>があるコマンドはユーザーが書き換える必要があります。**
+**<>は消してコマンドを実行します。**
 
 以下のコマンドを実行します。
 
@@ -52,8 +56,6 @@ Enter same passphrase again: <Enterキーを押下>
 Enter a file in which to save the key (C:\Users\<username>\.ssh\id_ed25519): ~/.ssh/github
 Enter passphrase (empty for no passphrase): <Enterキーを押下>
 Enter same passphrase again: <Enterキーを押下>
-> Get-Service -Name ssh-agent | Set-Service -StartupType Manual
-Start-Service ssh-agent
 ```
 
 ### [macOS] SSH Agent に秘密鍵を登録
@@ -108,6 +110,6 @@ Start-Service ssh-agent
 以下のコマンドを実行して、表示されれば成功です。
 
 ```
-% ssh -T git@github.com
+> ssh -T git@github.com
 Hi <username>! You've successfully authenticated, but GitHub does not provide shell access.
 ```
