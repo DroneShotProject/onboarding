@@ -1,14 +1,68 @@
 # DSP
 
-リポジトリをクローンします。
+リポジトリをクローンします。作業用ディレクトリの下に clone するのがベストプラクティスです。
 
-`C:\Users\<Username>\dev\github` の下に作業用のディレクトリを用意し、そこに clone するのがベストプラクティスです。
+### [macOS]
 
 ```zsh
-mkdir -p C:\Users\<Username>\dev\github
-cd C:\Users\<Username>\dev\github
-git clone git@github.com:DroneShotProject/DroneShotDJI.git
+% mkdir -p ~/dev/github
+% cd ~/dev/github
+% git clone git@github.com:DroneShotProject/DroneShotDJI.git
 ```
+
+### [Windows]
+
+`C:\Users\<Username>\dev\github` の下に作業用のディレクトリを用意します。
+
+```powershell
+> mkdir -p C:\Users\<Username>\dev\github
+> cd C:\Users\<Username>\dev\github
+> git clone git@github.com:DroneShotProject/DroneShotDJI.git
+```
+
+## [macOS] エミュレータでビルド・起動する（実機なし）
+
+実機がなくても、Android エミュレータでビルドが通ることを確認できます。
+前提は [04_AndroidStudio.md](04_AndroidStudio.md) の **[macOS] インストールとセットアップ**
+（JDK 17 / `JAVA_HOME` / SDK コマンドラインツール / `ANDROID_HOME`）が済んでいること。
+詳細は
+[DroneShotDJI/docs/mac-setup-guide.md](https://github.com/DroneShotProject/DroneShotDJI/blob/main/docs/mac-setup-guide.md)
+にあります。
+
+本アプリは **タブレット・横画面** 想定なので、タブレットプロファイルで AVD を作ります。
+
+```zsh
+% cd ~/dev/github/DroneShotDJI
+% echo "sdk.dir=$ANDROID_HOME" > frs-dsp-as/local.properties
+
+# エミュレータ（AVD）を作成（devices.xml の Error が出ても AVD は作成されます）
+% echo no | avdmanager create avd -n dsp_tablet \
+    -k "system-images;android-35;google_apis;arm64-v8a" -d pixel_tablet
+% printf 'hw.initialOrientation=landscape\nhw.keyboard=yes\nhw.ramSize=4096\n' \
+    >> ~/.android/avd/dsp_tablet.avd/config.ini
+
+# 起動
+% emulator -avd dsp_tablet -no-snapshot -no-boot-anim -gpu swiftshader_indirect &
+% adb wait-for-device
+% adb shell 'while [[ "$(getprop sys.boot_completed)" != "1" ]]; do sleep 1; done'
+
+# ビルド → エミュレータへインストール → 起動
+% cd frs-dsp-as
+% ./gradlew :dsp:assembleDevDebug
+% ./gradlew :dsp:installDevDebug
+# debug には LeakCanary のランチャーも入るため MainActivity を明示的に起動
+% adb shell am start -n com.frs.dsp/.MainActivity
+```
+
+- flavor は `dev` / `prod`、ビルドタイプは `debug` / `release`。エミュレータ確認は `devDebug` で十分です。
+- `debug` もリポジトリ同梱のキーストアで署名されるため、追加の署名設定は不要です。
+- APK 出力先: `frs-dsp-v1-app/build/outputs/apk/dev/debug/`
+- `INSTALL_FAILED_NO_MATCHING_ABIS` が出たら、AVD が x86/x86_64 イメージです。
+  本アプリは `abiFilters 'arm64-v8a'` なので **arm64-v8a** イメージで作り直してください。
+- 起動確認: `adb shell dumpsys window | grep mCurrentFocus` に
+  `com.frs.dsp/com.frs.dsp.home.HomeActivity` が出ればホーム画面まで到達しています。
+
+## Android Studio でのビルド手順
 
 ## Android Studio でのビルド手順
 
@@ -75,6 +129,15 @@ export JAVA_HOME="$HOME/.jdks/<jdk-17-directory>"
 ```
 
 実際のディレクトリ名は環境によって異なります。
+
+#### 例: macOS で Homebrew の Temurin 17 を使う
+
+```zsh
+brew install --cask temurin@17
+export JAVA_HOME="$(/usr/libexec/java_home -v 17)"
+cd frs-dsp-as
+./gradlew :dsp:assembleDevRelease   # または :dsp:assembleDevDebug
+```
 
 #### 例: Ubuntu で OpenJDK 17 を使う
 
