@@ -64,8 +64,6 @@
 
 ## Android Studio でのビルド手順
 
-## Android Studio でのビルド手順
-
 Android Studio で本リポジトリを開き、JDK 17 を Gradle に割り当てて、必要に応じて `release` ビルドで APK を生成し、実機へインストールします。
 
 ### 前提条件
