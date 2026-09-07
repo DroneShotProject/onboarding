@@ -25,3 +25,5 @@ Windows と macOS の両方に対応しています。各手順の見出しに `
 | 02 | [Branch](docs/onboarding/development/02_Branch.md) | ブランチの切り方 |
 | 03 | [Commit](docs/onboarding/development/03_Commit.md) | コミットの粒度と書き方 |
 | 04 | [Pull Request](docs/onboarding/development/04_PR.md) | Pull Request の出し方 |
+| 05 | [チーム開発と Git](docs/onboarding/development/05_TeamGit.md) | main からの pull・ブランチ戦略・暗黙知 |
+| 06 | [AI コーディング設定](docs/onboarding/development/06_AICodingConfig.md) | AGENTS.md / .claude の紹介とローカル適用 |
